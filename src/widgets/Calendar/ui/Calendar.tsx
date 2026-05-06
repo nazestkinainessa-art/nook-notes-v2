@@ -2,6 +2,7 @@ import "./Calendar.css";
 import { getCalendarData } from "../lib/getCalendarData";
 import { useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
+import { Button } from "../../../shared/ui/Button/Button";
 
 export function Calendar() {
   const [year, setYear] = useState(new Date().getFullYear());
@@ -33,6 +34,7 @@ export function Calendar() {
     setMonth(now.getMonth());
     setSelectedDay(now.getDate());
   };
+  const [activeTab, setActiveTab] = useState("month");
 
   return (
     <section className="calendar">
@@ -40,6 +42,20 @@ export function Calendar() {
         <h1>
           {monthNames[month]} {year}
         </h1>
+        <div className="calendar__nav-option">
+          <Button 
+          variant={activeTab === "month" ? "tab" : "default"}
+          onClick={() => setActiveTab("month")}
+          >
+            Month
+          </Button>
+          <Button
+          variant={activeTab === "year" ? "tab" : "default"}
+          onClick={() => setActiveTab("year")}
+          >
+            Year
+            </Button>
+            </div>
         <div className="calendar__month-selector">
           <FaAngleLeft className="nav-icon" onClick={() => changeMonth(-1)} />
           <button className="calendar__today-btn" onClick={handleToday}>
