@@ -1,8 +1,8 @@
-import "./Calendar.css";
 import { getCalendarData } from "../lib/getCalendarData";
 import { useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { Button } from "../../../shared/ui/Button/Button";
+import { Card } from "./card/card";
 
 export function Calendar() {
   const [year, setYear] = useState(new Date().getFullYear());
@@ -37,12 +37,12 @@ export function Calendar() {
   const [activeTab, setActiveTab] = useState("month");
 
   return (
-    <section className="calendar">
-      <div className="calendar__nav">
+    <section className="max-w-screen-2xl mx-auto px-5 w-full box-border">
+      <div className="flex justify-between items-center mt-10 mb-5">
         <h1>
           {monthNames[month]} {year}
         </h1>
-        <div className="calendar__nav-option">
+        <div>
           <Button 
           variant={activeTab === "month" ? "tab" : "default"}
           onClick={() => setActiveTab("month")}
@@ -56,45 +56,31 @@ export function Calendar() {
             Year
             </Button>
             </div>
-        <div className="calendar__month-selector">
-          <FaAngleLeft className="nav-icon" onClick={() => changeMonth(-1)} />
-          <button className="calendar__today-btn" onClick={handleToday}>
+        <div className="flex items-center justify-right ">
+          <FaAngleLeft onClick={() => changeMonth(-1)} />
+          <button onClick={handleToday}>
             today
           </button>
-          <FaAngleRight className="nav-icon" onClick={() => changeMonth(1)} />
+          <FaAngleRight onClick={() => changeMonth(1)} />
         </div>
       </div>
-      <div className="calendar__weekdays-header">
+      <div className="grid grid-cols-7 mb-2.5">
         {weekDays.map((name) => (
-          <div key={name} className="calendar__weekday">
+          <div key={name} className="flex items-center justify-center h-7.5 bg-transparent font-semibold text-sm text-[#755d48]">
             {name}
           </div>
         ))}
       </div>
-      <div className="calendar__grid">
-        {daysArray.map((_, index) => {
-          const dayNumber = index - startsFrom + 1;
-          const isValidDay = dayNumber > 0 && dayNumber <= daysInMonth;
-          const isToday =
-            isValidDay &&
-            dayNumber === today.getDate() &&
-            month === today.getMonth() &&
-            year === today.getFullYear();
-          let dayClass = "calendar__day";
-          if (isToday) dayClass += " calendar__day--today";
-          if (isValidDay && dayNumber === selectedDay)
-            dayClass += " calendar__day--selected";
-          return (
-            <div
-              key={index}
-              className={dayClass}
-              onClick={() => isValidDay && setSelectedDay(dayNumber)}
-            >
-              {isValidDay ? dayNumber : ""}
-            </div>
-          );
-        })}
-      </div>
+      <Card
+      daysArray={daysArray}
+      startsFrom={startsFrom}
+      daysInMonth={daysInMonth}
+      today={today}
+      month={month}
+      year={year}
+      selectedDay={selectedDay}
+      setSelectedDay={setSelectedDay}
+      />
     </section>
   );
 }
