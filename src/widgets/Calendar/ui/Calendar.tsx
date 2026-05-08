@@ -2,7 +2,7 @@ import { getCalendarData } from "../lib/getCalendarData";
 import { useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { Button } from "../../../shared/ui/Button/Button";
-import { Card } from "./card/card";
+import { Card } from "./card/CalendarGrid";
 
 export function Calendar() {
   const [year, setYear] = useState(new Date().getFullYear());
@@ -10,7 +10,19 @@ export function Calendar() {
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const { daysArray, startsFrom, daysInMonth } = getCalendarData(year, month);
   const weekDays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
-  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December",
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
   //const monthShort = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
   const today = new Date();
@@ -43,43 +55,46 @@ export function Calendar() {
           {monthNames[month]} {year}
         </h1>
         <div>
-          <Button 
-          variant={activeTab === "month" ? "tab" : "default"}
-          onClick={() => setActiveTab("month")}
+          <Button
+            variant={activeTab === "month" ? "tab" : "default"}
+            onClick={() => setActiveTab("month")}
           >
             Month
           </Button>
           <Button
-          variant={activeTab === "year" ? "tab" : "default"}
-          onClick={() => setActiveTab("year")}
+            variant={activeTab === "year" ? "tab" : "default"}
+            onClick={() => setActiveTab("year")}
           >
             Year
-            </Button>
-            </div>
+          </Button>
+        </div>
         <div className="flex items-center justify-right ">
           <FaAngleLeft onClick={() => changeMonth(-1)} />
-          <button onClick={handleToday}>
+          <Button variant="default" onClick={handleToday}>
             today
-          </button>
+          </Button>
           <FaAngleRight onClick={() => changeMonth(1)} />
         </div>
       </div>
       <div className="grid grid-cols-7 mb-2.5">
         {weekDays.map((name) => (
-          <div key={name} className="flex items-center justify-center h-7.5 bg-transparent font-semibold text-sm text-[#755d48]">
+          <div
+            key={name}
+            className="flex items-center justify-center h-7.5 bg-transparent font-semibold text-sm text-[#755d48]"
+          >
             {name}
           </div>
         ))}
       </div>
       <Card
-      daysArray={daysArray}
-      startsFrom={startsFrom}
-      daysInMonth={daysInMonth}
-      today={today}
-      month={month}
-      year={year}
-      selectedDay={selectedDay}
-      setSelectedDay={setSelectedDay}
+        daysArray={daysArray}
+        startsFrom={startsFrom}
+        daysInMonth={daysInMonth}
+        today={today}
+        month={month}
+        year={year}
+        selectedDay={selectedDay}
+        setSelectedDay={setSelectedDay}
       />
     </section>
   );

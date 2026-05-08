@@ -19,9 +19,6 @@ export function App() {
               <Button size="md" onClick={() => navigate("/notes")}>Заметки</Button>
             </li>
             <li>
-              <Button size="md">Напоминания</Button>
-            </li>
-            <li>
               <Button size="md">Тренировки</Button>
             </li>
           </ul>

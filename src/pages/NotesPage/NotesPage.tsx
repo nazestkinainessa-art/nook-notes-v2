@@ -1,10 +1,12 @@
 import { Button } from "../../shared/ui/Button/Button";
 import { NoteCard } from "../../entities/Note/ui/NoteCard";
-import { useState } from "react";
+import {useState} from "react";
+import { NoteModal } from "../../features/note-create/ui/NoteModal";
 
 export function NotesPage() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalInfoIsOpen, setmodalInfoIsOpen] = useState(false);
   return (
+    <>
     <section className="max-w-screen-2xl mx-auto px-5 w-full">
       <div className="flex justify-between items-center mt-10 gap-4">
         <input
@@ -16,9 +18,9 @@ export function NotesPage() {
           variant="create"
           size="lg"
           className="flex items-center gap-1"
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => setmodalInfoIsOpen(true)}
         >
-          + Заметка
+            + Заметка
         </Button>
       </div>
       <div className="mt-8">
@@ -26,5 +28,13 @@ export function NotesPage() {
       </div>
       <NoteCard></NoteCard>
     </section>
+    <NoteModal
+          isOpen={modalInfoIsOpen}
+          onClose={() => setmodalInfoIsOpen(false)}
+          >
+            <h2>Новая заметка</h2>
+            <p>Заголовок</p>
+            </NoteModal>
+    </>
   );
 }
