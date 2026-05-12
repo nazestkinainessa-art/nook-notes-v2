@@ -11,8 +11,11 @@ const buttonVariants = cva(
         default: "text-[#4a3f35] bg-transparent border-none",
         tab: "text-[#4a3f35] bg-transparent underline underline-offset-8 decoration-2 decoration-[#4a3f35] rounded-none shadow-none ring-0 focus:outline-none focus:ring-0",
         add: "bg-[#4a3f35] text-white rounded-full px-6 py-2 hover:opacity-90",
-        create: "bg-[#755d48] text-white rounded-full px-6 py-2 hover:opacity-90",
+        create:
+          "bg-[#755d48] text-white rounded-full px-6 py-2 hover:opacity-90",
         icon: "text-[#4a3f35] bg-transparent border-none",
+        cancel:
+          "bg-white text-[#4a3f35] rounded-full px-6 py-2 hover:opacity-90 border-1 border-[#4a3f35]",
       },
       size: {
         default: "h-8 px-2.5 text-sm",
