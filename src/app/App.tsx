@@ -1,8 +1,9 @@
 import { Button } from "../shared/ui/Button/Button";
 import { Calendar } from "../widgets/Calendar";
-import { NotesPage } from "../pages/NotesPage/NotesPage"
+import { NotesPage } from "../pages/NotesPage/NotesPage";
+import { TrainingsPage } from "../pages/TrainingsPage/ui/TrainingsPage";
 import { Routes, Route, useNavigate } from "react-router-dom";
-/* import { MdClose } from "react-icons/md";*/
+ /* import { MdClose } from "react-icons/md";*/
 
 export function App() {
   const navigate = useNavigate();
@@ -13,13 +14,17 @@ export function App() {
         <nav className="flex list-none gap-5 mr-7.5">
           <ul className="flex list-none gap-5 ml-0">
             <li>
-              <Button size="md" onClick={() => navigate("/")}>Календарь</Button>
+              <Button size="md" onClick={() => navigate("/")}>
+                Календарь
+              </Button>
             </li>
             <li>
-              <Button size="md" onClick={() => navigate("/notes")}>Заметки</Button>
+              <Button size="md" onClick={() => navigate("/notes")}>
+                Заметки
+              </Button>
             </li>
             <li>
-              <Button size="md">Тренировки</Button>
+              <Button size="md" onClick={() => navigate("/trainings")}>Тренировки</Button>
             </li>
           </ul>
         </nav>
@@ -28,8 +33,9 @@ export function App() {
         <Routes>
           <Route path="/" element={<Calendar />} />
           <Route path="/notes" element={<NotesPage />} />
+          <Route path="/trainings" element={<TrainingsPage />} />
         </Routes>
       </main>
-      </div>
+    </div>
   );
 }
