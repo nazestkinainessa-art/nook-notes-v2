@@ -28,7 +28,7 @@ export function TrainingsPage() {
   };
   const getTemplateTitle = (templateId: number) => {
     return (
-      templates.find((t) => t.id === templateId)?.title || "Удаленный шаблон"
+      templates.find((template) => template.id === templateId)?.title || "Удаленный шаблон"
     );
   };
   const formatScheduleDate = (dateString: string) => {

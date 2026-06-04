@@ -15,13 +15,13 @@ export function NotesList({
   searchQuery,
 }: NotesListProps) {
   const filteredNotes = notes.filter(
-    (n) =>
-      n.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      n.content.toLowerCase().includes(searchQuery.toLowerCase()),
+    (note) =>
+      note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      note.content.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
-  const datedNotes = filteredNotes.filter((n) => n.date !== "");
-  const globalNotes = filteredNotes.filter((n) => n.date === "");
+  const datedNotes = filteredNotes.filter((note) => note.date !== "");
+  const globalNotes = filteredNotes.filter((note) => note.date === "");
 
   if (notes.length === 0) {
     return (
@@ -41,12 +41,12 @@ export function NotesList({
             С датой
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {datedNotes.map((n) => (
+            {datedNotes.map((note) => (
               <NoteCard
-                key={n.id}
-                {...n}
+                key={note.id}
+                {...note}
                 onDelete={onDelete}
-                onEdit={() => onEdit(n)}
+                onEdit={() => onEdit(note)}
               />
             ))}
           </div>
@@ -59,13 +59,13 @@ export function NotesList({
             Глобальные
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {globalNotes.map((n) => (
+            {globalNotes.map((note) => (
               <NoteCard
-                key={n.id}
-                {...n}
+                key={note.id}
+                {...note}
                 isGlobal
                 onDelete={onDelete}
-                onEdit={() => onEdit(n)}
+                onEdit={() => onEdit(note)}
               />
             ))}
           </div>

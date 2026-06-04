@@ -79,10 +79,10 @@ export function TrainingCard({ template, onDelete, onEdit }: TrainingCardProps) 
                 
                 {dayData.exercises.length > 0 && (
                   <ul className="list-disc list-inside pl-3 text-sm text-[#755d48] flex flex-col gap-0.5">
-                    {dayData.exercises.map((ex) => (
-                      <li key={ex.id} className="text-xs">
-                        <span className="font-medium text-[#4a3f35]">{ex.name || "Упражнение"}</span> 
-                        {(ex.sets || ex.reps) && ` — ${ex.sets || 0} подх. по ${ex.reps || 0} повт.`}
+                    {dayData.exercises.map((exercise) => (
+                      <li key={exercise.id} className="text-xs">
+                        <span className="font-medium text-[#4a3f35]">{exercise.name || "Упражнение"}</span> 
+                        {(exercise.sets || exercise.reps) && ` — ${exercise.sets || 0} подх. по ${exercise.reps || 0} повт.`}
                       </li>
                     ))}
                   </ul>

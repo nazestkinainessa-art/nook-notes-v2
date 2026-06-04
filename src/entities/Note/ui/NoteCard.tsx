@@ -6,6 +6,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaCheck } from "react-icons/fa6";
 import type { Note } from "../model/types";
 import { formatDate } from "../../../shared/lib/date";
+import { Button } from "../../../shared/ui/Button/Button";
 
 interface NoteCardProps extends Note {
   isGlobal?: boolean;
@@ -56,12 +57,13 @@ export const NoteCard = ({ title, content, date, isGlobal, id, onDelete, onEdit 
 };
 
 const ActionButton = ({ onClick, icon, variant = "default" }: { onClick: () => void; icon: React.ReactNode; variant?: "default" | "danger" }) => (
-  <button
+  <Button
+    variant="icon" 
     onClick={onClick}
     className={`p-1.5 rounded-lg transition-colors ${
       variant === "danger" ? "hover:bg-[#ff848420] text-[#FF8484]" : "hover:bg-[#f5f1e6] text-[#4a3f35]"
     }`}
   >
     {icon}
-  </button>
+  </Button>
 );

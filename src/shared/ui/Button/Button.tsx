@@ -16,6 +16,7 @@ const buttonVariants = cva(
         icon: "text-[#4a3f35] bg-transparent border-none",
         cancel:
           "bg-white text-[#4a3f35] rounded-full px-6 py-2 hover:opacity-90 border-1 border-[#4a3f35]",
+        ghost: "text-[#755d48] bg-transparent hover:bg-[#e8dfd5] transition-colors",
       },
       size: {
         default: "h-8 px-2.5 text-sm",

@@ -80,12 +80,12 @@ export function TemplateModal({ onClose, onSave, editData }: TemplateModalProps)
 
                 {dayData.exercises.length > 0 && (
                   <div className="flex flex-col gap-2 mt-1 pl-2 border-l-2 border-[#c4a484]/40">
-                    {dayData.exercises.map((ex) => (
-                      <div key={ex.id} className="flex gap-2 items-center">
-                        <input type="text" placeholder="Упражнение" value={ex.name} onChange={(e) => handleExerciseChange(dayKey, ex.id, "name", e.target.value)} className="flex-1 h-10 px-3 rounded-lg bg-white border border-[#e8dfd5] outline-none text-xs focus:border-[#755d48]" />
-                        <input type="text" placeholder="Подх." value={ex.sets} onChange={(e) => handleExerciseChange(dayKey, ex.id, "sets", e.target.value)} className="w-14 h-10 px-2 rounded-lg bg-white border border-[#e8dfd5] outline-none text-xs text-center focus:border-[#755d48]" />
-                        <input type="text" placeholder="Повт." value={ex.reps} onChange={(e) => handleExerciseChange(dayKey, ex.id, "reps", e.target.value)} className="w-14 h-10 px-2 rounded-lg bg-white border border-[#e8dfd5] outline-none text-xs text-center focus:border-[#755d48]" />
-                        <button type="button" onClick={() => handleRemoveExercise(dayKey, ex.id)} className="p-1.5 hover:bg-[#ff848420] rounded-lg text-[#FF8484]"><RiDeleteBin6Line size={20} /></button>
+                    {dayData.exercises.map((exercise) => (
+                      <div key={exercise.id} className="flex gap-2 items-center">
+                        <input type="text" placeholder="Упражнение" value={exercise.name} onChange={(e) => handleExerciseChange(dayKey, exercise.id, "name", e.target.value)} className="flex-1 h-10 px-3 rounded-lg bg-white border border-[#e8dfd5] outline-none text-xs focus:border-[#755d48]" />
+                        <input type="text" placeholder="Подх." value={exercise.sets} onChange={(e) => handleExerciseChange(dayKey, exercise.id, "sets", e.target.value)} className="w-14 h-10 px-2 rounded-lg bg-white border border-[#e8dfd5] outline-none text-xs text-center focus:border-[#755d48]" />
+                        <input type="text" placeholder="Повт." value={exercise.reps} onChange={(e) => handleExerciseChange(dayKey, exercise.id, "reps", e.target.value)} className="w-14 h-10 px-2 rounded-lg bg-white border border-[#e8dfd5] outline-none text-xs text-center focus:border-[#755d48]" />
+                        <button type="button" onClick={() => handleRemoveExercise(dayKey, exercise.id)} className="p-1.5 hover:bg-[#ff848420] rounded-lg text-[#FF8484]"><RiDeleteBin6Line size={20} /></button>
                       </div>
                     ))}
                   </div>

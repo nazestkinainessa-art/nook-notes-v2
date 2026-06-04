@@ -22,17 +22,17 @@ export function useTrainings() {
 
   const saveTemplate = (templateData: TrainingTemplate) => {
     setTemplates((prev) => {
-      const exists = prev.some((t) => t.id === templateData.id);
+      const exists = prev.some((template) => template.id === templateData.id);
       if (exists) {
-        return prev.map((t) => (t.id === templateData.id ? templateData : t));
+        return prev.map((template) => (template.id === templateData.id ? templateData : template));
       }
       return [...prev, templateData];
     });
   };
 
   const deleteTemplate = (id: number) => {
-    setTemplates((prev) => prev.filter((t) => t.id !== id));
-    setSchedules((prev) => prev.filter((s) => s.templateId !== id));
+    setTemplates((prev) => prev.filter((template) => template.id !== id));
+    setSchedules((prev) => prev.filter((schedule) => schedule.templateId !== id));
   };
 
   const addSchedule = (scheduleData: Omit<ScheduledWorkout, "id">) => {
@@ -44,7 +44,7 @@ export function useTrainings() {
   };
 
   const deleteSchedule = (id: number) => {
-    setSchedules((prev) => prev.filter((s) => s.id !== id));
+    setSchedules((prev) => prev.filter((schedule) => schedule.id !== id));
   };
 
   return {

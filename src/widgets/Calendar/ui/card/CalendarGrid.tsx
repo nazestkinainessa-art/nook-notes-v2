@@ -1,4 +1,9 @@
 import type { Note } from "../../../../entities/Note/model/types";
+import type {
+  ScheduledWorkout,
+  TrainingTemplate,
+} from "../../../../entities/Training/model/types";
+import { dayNamesEng } from "../../lib/constants";
 interface CardProps {
   daysArray: null[];
   startsFrom: number;
@@ -9,53 +14,53 @@ interface CardProps {
   selectedDay: number | null;
   setSelectedDay: (day: number) => void;
 }
-interface TrainingSchedule {
-  id: number;
-  templateId: number;
-  startDate: string;
-  weeksCount: number;
-}
-interface TrainingTemplate {
-  id: number;
-  title: string;
-  days: Record<string, { workoutName: string; exercises: unknown[] }>;
-}
 
-export const Card = ({ 
-  daysArray, 
-  startsFrom, 
-  daysInMonth, 
-  today, 
-  month, 
-  year, 
-  selectedDay, 
-  setSelectedDay 
+export const Card = ({
+  daysArray,
+  startsFrom,
+  daysInMonth,
+  today,
+  month,
+  year,
+  selectedDay,
+  setSelectedDay,
 }: CardProps) => {
-
   const notes: Note[] = JSON.parse(localStorage.getItem("my_notes") || "[]");
-  const templates: TrainingTemplate[] = JSON.parse(localStorage.getItem("training_templates") || "[]");
-  const schedules: TrainingSchedule[] = JSON.parse(localStorage.getItem("training_schedules") || "[]");
+  const templates: TrainingTemplate[] = JSON.parse(
+    localStorage.getItem("training_templates") || "[]",
+  );
+  const schedules: ScheduledWorkout[] = JSON.parse(
+    localStorage.getItem("training_schedules") || "[]",
+  );
 
   const getEventsForDay = (dayNum: number) => {
     const pad = (num: number) => String(num).padStart(2, "0");
     const currentDayStr = `${year}-${pad(month + 1)}-${pad(dayNum)}`;
-    const currentNotes = notes.filter((note: Note) => note.date === currentDayStr);
+    const currentNotes = notes.filter(
+      (note: Note) => note.date === currentDayStr,
+    );
     const targetDate = new Date(year, month, dayNum);
-    const dayNamesEng = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
-    const dayName = dayNamesEng[targetDate.getDay()];
+    const dayName = dayNamesEng[targetDate.getDay()] as keyof TrainingTemplate["days"];
     const currentTrainings: string[] = [];
 
-    schedules.forEach((sched: TrainingSchedule) => {
-      const start = new Date(sched.startDate);
+    schedules.forEach((schedule: ScheduledWorkout) => {
+      const start = new Date(schedule.startDate);
       start.setHours(0, 0, 0, 0);
-      const end = new Date(start.getTime() + sched.weeksCount * 7 * 24 * 60 * 60 * 1000);
+      const end = new Date(
+        start.getTime() + schedule.weeksCount * 7 * 24 * 60 * 60 * 1000,
+      );
       end.setHours(23, 59, 59, 999);
 
       if (targetDate >= start && targetDate <= end) {
-        const template = templates.find((t: TrainingTemplate) => t.id === sched.templateId);
+        const template = templates.find(
+          (template: TrainingTemplate) => template.id === schedule.templateId,
+        );
         if (template?.days?.[dayName]) {
           const dayData = template.days[dayName];
-          if (dayData.workoutName?.trim() !== "" || dayData.exercises?.length > 0) {
+          if (
+            dayData.workoutName?.trim() !== "" ||
+            dayData.exercises?.length > 0
+          ) {
             currentTrainings.push(dayData.workoutName || "Workout");
           }
         }
@@ -70,21 +75,21 @@ export const Card = ({
       {daysArray.map((_, index) => {
         const dayNumber = index - startsFrom + 1;
         const isValidDay = dayNumber > 0 && dayNumber <= daysInMonth;
-        
+
         const isToday =
           isValidDay &&
           dayNumber === today.getDate() &&
           month === today.getMonth() &&
           year === today.getFullYear();
-          
+
         const dayClass = `
           flex flex-col items-center justify-start min-h-20 p-1 text-xs
-          ${isToday ? 'bg-[#f0ad4e] text-white' : 'bg-[#f5f1e6] text-[#4a3f35]'}
-          ${isValidDay && dayNumber === selectedDay ? 'bg-blue-500 text-white' : ''}
+          ${isToday ? "bg-[#f0ad4e] text-white" : "bg-[#f5f1e6] text-[#4a3f35]"}
+          ${isValidDay && dayNumber === selectedDay ? "bg-blue-500 text-white" : ""}
         `;
 
-        const { currentNotes, currentTrainings } = isValidDay 
-          ? getEventsForDay(dayNumber) 
+        const { currentNotes, currentTrainings } = isValidDay
+          ? getEventsForDay(dayNumber)
           : { currentNotes: [], currentTrainings: [] };
 
         return (
@@ -93,15 +98,27 @@ export const Card = ({
             className={dayClass}
             onClick={() => isValidDay && setSelectedDay(dayNumber)}
           >
-            <span className="font-bold mb-1">{isValidDay ? dayNumber : ""}</span>
-            
+            <span className="font-bold mb-1">
+              {isValidDay ? dayNumber : ""}
+            </span>
+
             {isValidDay && (
               <div className="flex flex-col text-[10px] truncate w-full text-center pointer-events-none gap-0.5">
-                {currentTrainings.map((title, idx) => (
-                  <span key={idx} className="font-bold text-[#755d48] bg-[#fff1da] px-1 rounded truncate">{title}</span>
+                {currentTrainings.map((title, index) => (
+                  <span
+                    key={index}
+                    className="font-bold text-[#755d48] bg-[#fff1da] px-1 rounded truncate"
+                  >
+                    {title}
+                  </span>
                 ))}
-                {currentNotes.map((note, idx) => (
-                  <span key={idx} className="italic text-[#4a3f35] bg-[#e8dfd5]/60 px-1 rounded truncate">{note.title}</span>
+                {currentNotes.map((note, index) => (
+                  <span
+                    key={index}
+                    className="italic text-[#4a3f35] bg-[#e8dfd5]/60 px-1 rounded truncate"
+                  >
+                    {note.title}
+                  </span>
                 ))}
               </div>
             )}

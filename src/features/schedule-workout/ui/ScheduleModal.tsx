@@ -34,7 +34,7 @@ export function ScheduleModal({ templates, onClose, onSave }: ScheduleModalProps
         <div className="flex flex-col gap-1">
           <label className="text-xs font-semibold text-[#755d48]">Шаблон *</label>
           <select value={selectedTemplateId} onChange={(e) => setSelectedTemplateId(e.target.value)} className="h-11 px-3 rounded-xl bg-[#fdfbf7] border border-[#e8dfd5] text-sm text-[#4a3f35] outline-none focus:border-[#755d48] cursor-pointer" >
-            {templates.map((t) => ( <option key={t.id} value={t.id}>{t.title}</option> ))}
+            {templates.map((template) => ( <option key={template.id} value={template.id}>{template.title}</option> ))}
           </select>
         </div>
 

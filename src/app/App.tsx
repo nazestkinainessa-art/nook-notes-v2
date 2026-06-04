@@ -1,5 +1,5 @@
 import { Button } from "../shared/ui/Button/Button";
-import { Calendar } from "../widgets/Calendar";
+import { CalendarPage } from "../pages/CalendarPage";
 import { NotesPage } from "../pages/NotesPage/NotesPage";
 import { TrainingsPage } from "../pages/TrainingsPage/ui/TrainingsPage";
 import { Routes, Route, useNavigate } from "react-router-dom";
@@ -31,7 +31,7 @@ export function App() {
       </header>
       <main>
         <Routes>
-          <Route path="/" element={<Calendar />} />
+          <Route path="/" element={<CalendarPage />} />
           <Route path="/notes" element={<NotesPage />} />
           <Route path="/trainings" element={<TrainingsPage />} />
         </Routes>

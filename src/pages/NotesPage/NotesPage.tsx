@@ -18,15 +18,15 @@ export function NotesPage() {
   }, [notes]);
 
   const handleSaveNote = (noteData: Note) => {
-    const exists = notes.some((n) => n.id === noteData.id);
+    const exists = notes.some((note) => note.id === noteData.id);
     setNotes(exists 
-      ? notes.map((n) => (n.id === noteData.id ? noteData : n)) 
+      ? notes.map((note) => (note.id === noteData.id ? noteData : note)) 
       : [...notes, noteData]
     );
     setEditingNote(null);
   };
 
-  const handleDelete = (id: number) => setNotes(notes.filter((n) => n.id !== id));
+  const handleDelete = (id: number) => setNotes(notes.filter((note) => note.id !== id));
 
   const handleEdit = (note: Note) => {
     setEditingNote(note);
