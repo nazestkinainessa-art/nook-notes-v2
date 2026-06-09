@@ -1,6 +1,7 @@
 import type {Note} from "../../../entities/Note/model/types"
 import type {TrainingTemplate, Exercise, ScheduledWorkout} from "../../../entities/Training/model/types"
 import { dayNamesEng } from "./constants";
+import {pad} from "../../../shared/lib/utils";
 
 export function useCalendarEvents(year: number, month: number, selectedDay: number | null) {
     const notes: Note[] = JSON.parse(localStorage.getItem("my_notes") || "[]");
@@ -8,7 +9,6 @@ export function useCalendarEvents(year: number, month: number, selectedDay: numb
     const schedules: ScheduledWorkout[] = JSON.parse(localStorage.getItem("training_schedules") || "[]");
 
         if (!selectedDay) return { dayNotes: [], dayTrainings: [] };
-        const pad = (num: number) => String(num).padStart(2, "0");
         const currentDayStr = `${year}-${pad(month + 1)}-${pad(selectedDay)}`;
         const dayNotes = notes.filter((note) => note.date === currentDayStr);
         const targetDate = new Date(year, month, selectedDay);

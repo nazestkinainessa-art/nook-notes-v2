@@ -14,6 +14,18 @@ interface NoteCardProps extends Note {
   onEdit: () => void;
 }
 
+const ActionButton = ({ onClick, icon, variant = "default" }: { onClick: () => void; icon: React.ReactNode; variant?: "default" | "danger" }) => (
+  <Button
+    variant="icon" 
+    onClick={onClick}
+    className={`p-1.5 rounded-lg transition-colors ${
+      variant === "danger" ? "hover:bg-[#ff848420] text-[#FF8484]" : "hover:bg-[#f5f1e6] text-[#4a3f35]"
+    }`}
+  >
+    {icon}
+  </Button>
+);
+
 export const NoteCard = ({ title, content, date, isGlobal, id, onDelete, onEdit }: NoteCardProps) => {
   const [isCopied, setIsCopied] = useState(false);
 
@@ -55,15 +67,3 @@ export const NoteCard = ({ title, content, date, isGlobal, id, onDelete, onEdit 
     </div>
   );
 };
-
-const ActionButton = ({ onClick, icon, variant = "default" }: { onClick: () => void; icon: React.ReactNode; variant?: "default" | "danger" }) => (
-  <Button
-    variant="icon" 
-    onClick={onClick}
-    className={`p-1.5 rounded-lg transition-colors ${
-      variant === "danger" ? "hover:bg-[#ff848420] text-[#FF8484]" : "hover:bg-[#f5f1e6] text-[#4a3f35]"
-    }`}
-  >
-    {icon}
-  </Button>
-);

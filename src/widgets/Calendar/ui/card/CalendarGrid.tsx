@@ -4,6 +4,7 @@ import type {
   TrainingTemplate,
 } from "../../../../entities/Training/model/types";
 import { dayNamesEng } from "../../lib/constants";
+import {pad} from "../../../../shared/lib/utils";
 interface CardProps {
   daysArray: null[];
   startsFrom: number;
@@ -34,7 +35,6 @@ export const Card = ({
   );
 
   const getEventsForDay = (dayNum: number) => {
-    const pad = (num: number) => String(num).padStart(2, "0");
     const currentDayStr = `${year}-${pad(month + 1)}-${pad(dayNum)}`;
     const currentNotes = notes.filter(
       (note: Note) => note.date === currentDayStr,

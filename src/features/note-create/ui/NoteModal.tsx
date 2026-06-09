@@ -3,14 +3,14 @@ import { Button } from "../../../shared/ui/Button/Button";
 import { MdClose } from "react-icons/md";
 import ReactMarkdown from "react-markdown";
 import type { Note } from "../../../entities/Note/model/types";
-
-
+import { TabButton } from "../../../shared/ui/TabButton/TabButton";
 
 interface NoteModalProps {
   editData: Note | null;
   onClose: () => void;
   onAddNote: (note: Note) => void;
 }
+
 
 export function NoteModal({ editData, onClose, onAddNote }: NoteModalProps) {
   const [title, setTitle] = useState(editData?.title || "");
@@ -56,7 +56,9 @@ export function NoteModal({ editData, onClose, onAddNote }: NoteModalProps) {
 
         <div className="flex gap-4 w-full items-end">
           <div className="flex-2 flex flex-col gap-1.5 w-full">
-            <label className="text-sm font-semibold text-[#755d48]">Заголовок *</label>
+            <label className="text-sm font-semibold text-[#755d48]">
+              Заголовок *
+            </label>
             <input
               type="text"
               placeholder="Название заметки..."
@@ -78,28 +80,24 @@ export function NoteModal({ editData, onClose, onAddNote }: NoteModalProps) {
         </div>
 
         <div className="flex flex-col gap-3">
-          <label className="text-sm font-semibold text-[#755d48]">Содержимое</label>
+          <label className="text-sm font-semibold text-[#755d48]">
+            Содержимое
+          </label>
           <div className="flex bg-[#f5f1e6] p-1 rounded-xl w-fit">
-            <button
-              onClick={() => setActiveTab("edit")}
-              className={`px-6 py-1.5 rounded-lg text-sm transition-all ${activeTab === "edit" ? "bg-white shadow-sm" : "opacity-50"}`}
-            >
+            <TabButton isActive={activeTab === "edit"} onClick={() => setActiveTab("edit")}>
               Редактор
-            </button>
-            <button
-              onClick={() => setActiveTab("preview")}
-              className={`px-6 py-1.5 rounded-lg text-sm transition-all ${activeTab === "preview" ? "bg-white shadow-sm" : "opacity-50"}`}
-            >
-              Предпросмотр
-            </button>
-          </div>
-
-          {activeTab === "edit" ? (
+              </TabButton>
+              <TabButton isActive={activeTab === "preview"} onClick={() => setActiveTab("preview")}>
+                Предпросмотр
+                </TabButton>
+                </div>
+                
+                {activeTab === "edit" ? (
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}
               className="w-full min-h-60 p-5 rounded-2xl bg-[#fdfbf7] border border-[#e8dfd5] outline-none resize-none font-mono text-sm"
-              placeholder="# Начни писать..."
+              placeholder="Начните вводить текст..."
             />
           ) : (
             <div className="w-full min-h-60 p-5 rounded-2xl bg-[#fdfbf7] border border-[#e8dfd5] overflow-y-auto text-[#4a3f35]">
@@ -109,7 +107,9 @@ export function NoteModal({ editData, onClose, onAddNote }: NoteModalProps) {
         </div>
 
         <div className="flex justify-end gap-3 mt-2">
-          <Button variant="cancel" size="lg" onClick={onClose}>Отмена</Button>
+          <Button variant="cancel" size="lg" onClick={onClose}>
+            Отмена
+          </Button>
           <Button variant="create" size="lg" onClick={handleSave}>
             {editData ? "Сохранить" : "Создать"}
           </Button>
