@@ -27,7 +27,6 @@ export function ScheduleCard({ schedule, templateTitle, formattedDate, onDelete 
         </div>
       </div>
       
-      {/* Здесь мы исправили замечание наставника! */}
       <Button
         variant="icon"
         onClick={() => onDelete(schedule.id)}

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Button } from "../../../shared/ui/Button/Button";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import type { DayWorkout, Exercise, TrainingTemplate } from "../../../entities/Training/model/types";
+import type { Exercise, TrainingTemplate } from "../../../entities/Training/model/types";
+import { DAYS_TRANSLATION, initialDayState } from "../../../entities/Training/model/constants";
 
 interface TemplateModalProps {
   onClose: () => void;
@@ -9,21 +10,6 @@ interface TemplateModalProps {
   editData?: TrainingTemplate | null;
 }
 
-const DAYS_OF_WEEK = [
-  { key: "monday", label: "MONDAY" },
-  { key: "tuesday", label: "TUESDAY" },
-  { key: "wednesday", label: "WEDNESDAY" },
-  { key: "thursday", label: "THURSDAY" },
-  { key: "friday", label: "FRIDAY" },
-  { key: "saturday", label: "SATURDAY" },
-  { key: "sunday", label: "SUNDAY" },
-] as const;
-
-const initialDayState: DayWorkout = {
-  workoutName: "",
-  time: "",
-  exercises: [],
-};
 
 type DaysState = TrainingTemplate["days"];
 
@@ -57,7 +43,8 @@ export function TemplateModal({ onClose, onSave, editData }: TemplateModalProps)
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4" onClick={onClose}>
       <div className="relative bg-white rounded-3xl p-8 w-full max-w-xl max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col gap-6" onClick={(e) => e.stopPropagation()}>
-        <button onClick={onClose} className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+        <Button variant="icon" 
+        onClick={onClose} className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 text-2xl">&times;</Button>
         <h2 className="text-xl font-bold text-[#4a3f35]">{editData ? "Редактировать шаблон" : "Новый шаблон недели"}</h2>
 
         <div className="flex flex-col gap-1.5">
@@ -67,7 +54,7 @@ export function TemplateModal({ onClose, onSave, editData }: TemplateModalProps)
         <hr className="border-[#e8dfd5]" />
 
         <div className="flex flex-col gap-6">
-          {DAYS_OF_WEEK.map((day) => {
+          {DAYS_TRANSLATION.map((day) => {
             const dayKey = day.key;
             const dayData = days[dayKey];
             return (
@@ -85,12 +72,14 @@ export function TemplateModal({ onClose, onSave, editData }: TemplateModalProps)
                         <input type="text" placeholder="Упражнение" value={exercise.name} onChange={(e) => handleExerciseChange(dayKey, exercise.id, "name", e.target.value)} className="flex-1 h-10 px-3 rounded-lg bg-white border border-[#e8dfd5] outline-none text-xs focus:border-[#755d48]" />
                         <input type="text" placeholder="Подх." value={exercise.sets} onChange={(e) => handleExerciseChange(dayKey, exercise.id, "sets", e.target.value)} className="w-14 h-10 px-2 rounded-lg bg-white border border-[#e8dfd5] outline-none text-xs text-center focus:border-[#755d48]" />
                         <input type="text" placeholder="Повт." value={exercise.reps} onChange={(e) => handleExerciseChange(dayKey, exercise.id, "reps", e.target.value)} className="w-14 h-10 px-2 rounded-lg bg-white border border-[#e8dfd5] outline-none text-xs text-center focus:border-[#755d48]" />
-                        <button type="button" onClick={() => handleRemoveExercise(dayKey, exercise.id)} className="p-1.5 hover:bg-[#ff848420] rounded-lg text-[#FF8484]"><RiDeleteBin6Line size={20} /></button>
+                        <Button variant="icon"
+                        onClick={() => handleRemoveExercise(dayKey, exercise.id)} className="p-1.5 hover:bg-[#ff848420] rounded-lg text-[#FF8484]"><RiDeleteBin6Line size={20} /></Button>
                       </div>
                     ))}
                   </div>
                 )}
-                <button type="button" onClick={() => handleAddExercise(dayKey)} className="text-left text-xs font-semibold text-[#755d48] hover:text-[#4a3f35] w-fit mt-1">+ Упражнение</button>
+                <Button variant="icon"
+                 onClick={() => handleAddExercise(dayKey)} className="text-left text-xs font-semibold text-[#755d48] hover:text-[#4a3f35] w-fit mt-1">+ Упражнение</Button>
               </div>
             );
           })}
