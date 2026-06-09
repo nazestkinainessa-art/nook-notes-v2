@@ -8,3 +8,10 @@ export const formatDate = (dateString: string): string => {
     year: "numeric",
   }).format(date);
 };
+
+export const formatScheduleDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return `c ${date.getDate()} ${date.toLocaleString("en", { month: "short" })} ${date.getFullYear()}`;
+  };
+
+  

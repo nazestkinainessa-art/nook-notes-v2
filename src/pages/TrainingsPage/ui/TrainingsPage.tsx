@@ -3,10 +3,10 @@ import { Button } from "../../../shared/ui/Button/Button";
 import { TemplateModal } from "../../../features/manage-template/ui/TemplateModal";
 import { ScheduleModal } from "../../../features/schedule-workout/ui/ScheduleModal";
 import { TrainingCard } from "../../../entities/Training/ui/TrainingCard";
+import { ScheduleCard } from "../../../entities/Training/ui/ScheduleCard";
 import { useTrainings } from "../../../entities/Training/model/useTrainings";
+import { formatScheduleDate } from "../../../shared/lib/date";
 import type { TrainingTemplate } from "../../../entities/Training/model/types";
-import { SlEnergy } from "react-icons/sl";
-import { RiDeleteBin6Line } from "react-icons/ri";
 
 export function TrainingsPage() {
   const {
@@ -17,23 +17,20 @@ export function TrainingsPage() {
     addSchedule,
     deleteSchedule,
   } = useTrainings();
+  
   const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
   const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
-  const [editingTemplate, setEditingTemplate] =
-    useState<TrainingTemplate | null>(null);
+  const [editingTemplate, setEditingTemplate] = useState<TrainingTemplate | null>(null);
+  
   const isScheduleDisabled = templates.length === 0;
+  
   const handleEditClick = (template: TrainingTemplate) => {
     setEditingTemplate(template);
     setIsTemplateModalOpen(true);
   };
+  
   const getTemplateTitle = (templateId: number) => {
-    return (
-      templates.find((template) => template.id === templateId)?.title || "Удаленный шаблон"
-    );
-  };
-  const formatScheduleDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return `c ${date.getDate()} ${date.toLocaleString("en", { month: "short" })} ${date.getFullYear()}`;
+    return templates.find((template) => template.id === templateId)?.title || "Удаленный шаблон";
   };
 
   return (
@@ -67,32 +64,13 @@ export function TrainingsPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
             {schedules.map((schedule) => (
-              <div
+              <ScheduleCard
                 key={schedule.id}
-                className="bg-[#fdfbf7] border border-[#e8dfd5] rounded-3xl p-5 flex items-center justify-between gap-4"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-[#fff1da] rounded-xl flex items-center justify-center text-[#ffab2d]">
-                    <SlEnergy size={20} />
-                  </div>
-                  <div>
-                    <h3 className="text-base font-semibold text-[#4a3f35] leading-snug">
-                      {getTemplateTitle(schedule.templateId)}
-                    </h3>
-                    <p className="text-xs text-[#755d48] opacity-70">
-                      {formatScheduleDate(schedule.startDate)} ·{" "}
-                      {schedule.weeksCount} нед.
-                    </p>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => deleteSchedule(schedule.id)}
-                  className="p-2 hover:bg-[#ff848420] rounded-xl text-[#FF8484] transition-colors"
-                >
-                  <RiDeleteBin6Line size={18} />
-                </button>
-              </div>
+                schedule={schedule}
+                templateTitle={getTemplateTitle(schedule.templateId)}
+                formattedDate={formatScheduleDate(schedule.startDate)}
+                onDelete={deleteSchedule}
+              />
             ))}
           </div>
         </div>
@@ -132,6 +110,7 @@ export function TrainingsPage() {
           onSave={saveTemplate}
         />
       )}
+      
       {isScheduleModalOpen && (
         <ScheduleModal
           templates={templates}
